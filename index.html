@@ -1,0 +1,53 @@
+<head>
+    <meta charset="utf-8">
+    <title>Metropol</title>
+</head>
+<body style="background-color: #fff">
+    <div style="width: 650px; margin: 0 auto; background-color: #fff; margin-top: 20px;">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="ticnet-movies-app.js"></script>
+        <link rel="stylesheet" href="ticnet-movies-styles.css">
+
+        <div ng-app="ticnet-movies"
+             ng-controller="MovieListController"
+             class="ticnet-movies-app--movie-list">
+
+            <div style="font-size: 40px;font-weight: bold; text-align: center;">FILMER</div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr class="ticnet-movies-app--movie-box"
+                    ng-repeat="m in ::movies">
+                    
+                    <td class="ticnet-movies-app--date ticnet-movies-app--table-cell" ng-bind="::m.formattedStart"></td>
+
+                    <td class="ticnet-movies-app--image ticnet-movies-app--table-cell">
+                        <div class="ticnet-movies-app--poster-container">
+                            <img class="ticnet-movies-app--poster" ng-src="{{m.images.thumb}}">
+                        </div>
+                    </td>
+                    
+                    <td class="ticnet-movies-app--title ticnet-movies-app--table-cell" width="999">
+                        <b ng-bind="::m.name"></b><br>
+                        <i ng-if="m.name " ng-bind="::m.formattedLength"></i>
+                    </td>
+
+                    <td class="ticnet-movies-app--movie-actions ticnet-movies-app--table-cell">
+                        <button class="ticnet-movies-app--movie-button">
+                            <i class="ticnet-movies-app--info-icon">i</i>VISA MER
+                        </button><br>
+                        <a class="ticnet-movies-app--movie-button"
+                           ng-href="{{::m.shopUri}}"
+                           ng-click="onPurchaseClick($event)">
+                            $ KÖP
+                        </a>
+                    </td>
+
+                    
+                </tr>
+            </tr>
+
+        </div>
+
+    </div>
+
+<body>

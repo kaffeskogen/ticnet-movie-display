@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+}
+
+.ticnet-movies-app--movie-list {
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: auto;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.ticnet-movies-app--movie-box {
+    min-height: 100px;
+    /*box-shadow: 0 0 0.4px rgba(0,0,0,0.5);*/
+    border-bottom: solid 1px #d1cec5;
+}
+
+.ticnet-movies-app--poster {
+    display: block;
+}
+
+.ticnet-movies-app--date {
+    text-align: center;
+    width: 50px;
+}
+
+.ticnet-movies-app--table-cell {
+    vertical-align: middle;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 14px;
+}
+
+.ticnet-movies-app--poster-container {
+    padding: 6px;
+    background-color: #fff;
+    box-shadow: rgba(0,0,0,.1) 1px 1px 2px;
+}
+
+.ticnet-movies-app--movie-actions {
+    min-width: 110px;
+    text-align: center;
+}
+
+.ticnet-movies-app--movie-button {
+    text-decoration: none;
+    color: #fff;
+    background-color: #3d3d3d;
+    padding: 6px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+    min-width: auto;
+    min-height: auto;
+}
+
+.ticnet-movies-app--info-icon {
+    display: inline-block;
+    border: 1px solid currentColor;
+    border-radius: 99px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+
+.ticnet-movies-app--movie-button:hover,
+.ticnet-movies-app--movie-button:visited,
+.ticnet-movies-app--movie-button:active,
+.ticnet-movies-app--movie-button:focus {
+    text-decoration: none;
+    color: #fff;
+}
+
+
+.ticnet-movies-app--movie-button:hover,
+.ticnet-movies-app--movie-button:active,
+.ticnet-movies-app--movie-button:focus {
+    background-color: #6d6d6d;
+}
