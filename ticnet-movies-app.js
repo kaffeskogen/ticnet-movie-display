@@ -49,8 +49,18 @@
 (function() {
     angular
         .module('ticnet-movies', [])
+        .config(Configuration)
         .controller('MovieListController', MovieListController)
         .service('ReqService', ReqService);
+        
+    MovieListController.$Inject = '$sceDelegateProvider';
+
+    function Configuration($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            'self',
+            'http://www.tickster.com/sv/api/**'
+        ]);
+    }
 
     MovieListController.$Inject = '$scope,$http,ReqService,$element';
     
@@ -70,7 +80,7 @@
                             m.formattedLength = minutes + ' minuter';
                         } else {
                             var hours = Math.floor(minutes/60);
-                            var minutes = minutes % 60;
+                            minutes = minutes % 60;
                             m.formattedLength = hours + 'h ' + minutes + 'm';
                         }
                     }
@@ -89,21 +99,20 @@
         };
 
         function displayError(err) {
-            console.log(errror)
+            console.log(err);
         }
     }
 
-    function ReqService($http) {
+    MovieListController.$Inject = '$http,$sce';
+    
+    function ReqService($http,$sce) {
         var ticnetBase = 'http://www.tickster.com/sv/api/0.3';
-        var id = 'lz5huku7rdf3jxy'
+        var id = 'lz5huku7rdf3jxy';
         var key = 'ec154c92dc5adab1';
 
         this.getAllMovies = function() {
-            return $http({
-                url: ticnetBase + '/events/by/' + id + '?key=' + key,
-                cache: false
-            });
-        }
+            return $http.jsonp(ticnetBase + '/events/by/' + id + '?key=' + key);
+        };
     }
 
     function formatDate(d) {
