@@ -16,23 +16,26 @@
             <div style="font-size: 40px;font-weight: bold; text-align: center;">FILMER</div>
             <table style="width: 100%; border-collapse: collapse;">
                 <tr class="ticnet-movies-app--movie-box"
-                    ng-repeat="m in ::movies">
+                    ng-repeat-start="m in ::movies">
                     
                     <td class="ticnet-movies-app--date ticnet-movies-app--table-cell" ng-bind="::m.formattedStart"></td>
 
-                    <td class="ticnet-movies-app--image ticnet-movies-app--table-cell">
+                    <td class="ticnet-movies-app--image ticnet-movies-app--table-cell" width="145">
                         <div class="ticnet-movies-app--poster-container">
                             <img class="ticnet-movies-app--poster" ng-src="{{m.images.thumb}}">
                         </div>
                     </td>
                     
-                    <td class="ticnet-movies-app--title ticnet-movies-app--table-cell" width="999">
+                    <td class="ticnet-movies-app--title ticnet-movies-app--table-cell">
                         <b ng-bind="::m.name"></b><br>
                         <i ng-if="m.name " ng-bind="::m.formattedLength"></i>
                     </td>
 
                     <td class="ticnet-movies-app--movie-actions ticnet-movies-app--table-cell">
-                        <button class="ticnet-movies-app--movie-button">
+                        <button
+                            class="ticnet-movies-app--movie-button"
+                            type="button"
+                            ng-click="onShowInfoClick($event, m)">
                             <i class="ticnet-movies-app--info-icon">i</i>VISA MER
                         </button><br>
                         <a class="ticnet-movies-app--movie-button"
@@ -41,8 +44,18 @@
                             $ KÖP
                         </a>
                     </td>
-
-                    
+                </tr>
+                
+                <tr ng-repeat-end ng-if="selectedMovie === m">
+                    <td></td>
+                    <td colspan="2">
+                        <div class="ticnet-movies-app--loader" ng-if="!eventInfos[m.name]" style="margin: 0 auto;"></div>
+                        <div ng-if="eventInfos[m.name]">
+                            <p ng-bind-html="::eventInfos[m.name].description|TrustFilter"></p>
+                            <p style="padding-bottom: 10px;font-size: 13px;" ng-if="eventInfos[m.name].actors.length">Framträdanden av: <span ng-bind="::eventInfos[m.name].actors|FormattedStrArr"></span></p>
+                        </div>
+                    </td>
+                    <td></td>
                 </tr>
             </tr>
 

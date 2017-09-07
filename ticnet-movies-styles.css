@@ -12,7 +12,7 @@
 .ticnet-movies-app--movie-box {
     min-height: 100px;
     /*box-shadow: 0 0 0.4px rgba(0,0,0,0.5);*/
-    border-bottom: solid 1px #d1cec5;
+    /* border-bottom: solid 1px #d1cec5; */
 }
 
 .ticnet-movies-app--poster {
@@ -79,4 +79,19 @@
 .ticnet-movies-app--movie-button:active,
 .ticnet-movies-app--movie-button:focus {
     background-color: #6d6d6d;
+}
+
+.ticnet-movies-app--loader {
+    border: 5px solid #f3f3f3;
+    -webkit-animation: ticnet-movies-app--spin 1s linear infinite;
+    animation: ticnet-movies-app--spin 1s linear infinite;
+    border-top: 5px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+@keyframes ticnet-movies-app--spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

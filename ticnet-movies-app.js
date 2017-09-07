@@ -1,4 +1,4 @@
-/**
+/** MovieImages
  @typedef MovieImages
  @type {Object}
  @property {String} large - Movie poster uri
@@ -6,7 +6,7 @@
  @property {String} thumb - Movie poster uri
  */
 
-/**
+/** MovieOrganizer
  @typedef MovieOrganizer
  @type {Object}
  @property {String} id
@@ -14,7 +14,7 @@
  @property {String} name
  */
 
-/**
+/** MovieVenue
  @typedef MovieVenue
  @type {Object}
  @property {String} city
@@ -25,7 +25,7 @@
  @property {String} name
  */
 
-/**
+/** MovieEvent
  @typedef MovieEvent
  @type {Object}
  @property {String} apiUri
@@ -46,11 +46,14 @@
  @property {MovieVenue} venue
  */
 
+
 (function() {
     angular
         .module('ticnet-movies', [])
         .config(Configuration)
         .controller('MovieListController', MovieListController)
+        .filter('TrustFilter', TrustFilter)
+        .filter('FormattedStrArr', FormattedStrArrFilter)
         .service('ReqService', ReqService);
         
     MovieListController.$Inject = '$sceDelegateProvider';
@@ -66,6 +69,9 @@
     
     /** @param {{ movies: MovieEvent[] }} $scope */
     function MovieListController($scope, $http, ReqService, $element)  {
+
+        $scope.selectedMovie = null;
+        $scope.eventInfos = {};
         
         ReqService.getAllMovies()
             .then(function(response) {
@@ -89,6 +95,17 @@
                 displayError(response);
             });
         
+        /** @param { MovieEvent } movie */
+        $scope.onShowInfoClick = function(evt, movie) {
+            $scope.selectedMovie === movie ? $scope.selectedMovie = null : $scope.selectedMovie = movie;
+            if (!$scope.eventInfos[movie.id]) {
+                ReqService.getEventInfo(movie.id)
+                    .then(function(response) {
+                        $scope.eventInfos[movie.name] = response.data.event;
+                    });
+            }
+        };
+        
         $scope.onPurchaseClick = function(evt) {
             var t = 850
             , i = 600
@@ -103,8 +120,20 @@
         }
     }
 
-    MovieListController.$Inject = '$http,$sce';
-    
+    TrustFilter.$Inject = '$sce';
+    function TrustFilter ($sce) {
+        return function(value, type) {
+            return $sce.trustAs(type || 'html', value);
+        };
+    }
+
+    function FormattedStrArrFilter ($sce) {
+        return function(value, type) {
+            return value.join(', ');
+        };
+    }
+
+    ReqService.$Inject = '$http,$sce';
     function ReqService($http,$sce) {
         var ticnetBase = 'http://www.tickster.com/sv/api/0.3';
         var id = 'lz5huku7rdf3jxy';
@@ -112,6 +141,10 @@
 
         this.getAllMovies = function() {
             return $http.jsonp(ticnetBase + '/events/by/' + id + '?key=' + key);
+        };
+
+        this.getEventInfo = function(eventId) {
+            return $http.jsonp(ticnetBase + '/events/' + eventId + '?key=' + key);
         };
     }
 
